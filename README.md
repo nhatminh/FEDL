@@ -2,10 +2,11 @@
 
 This repository is a simulation code for the paper
 
-Nguyen H. Tran, Wei Bao, Albert Zomaya, Minh N. H. Nguyen, Choong Seon Hong 
-"Federated Learning over Wireless Networks: Optimization Model Design and Analysis", IEEE INFOCOM 2019 (Accepted).
+Canh Dinh, Nguyen H. Tran, Minh N. H. Nguyen, Choong Seon Hong, Wei Bao, Albert Y. Zomaya, Vincent Gramoli
+"Federated Learning over Wireless Networks: Convergence Analysis and Resource Allocation".
+https://arxiv.org/abs/1910.13067
 
-We use Julia version 0.6.
+We use Julia version 1.0.
 
 All of Figures will be generated in `figs` folder.
 
