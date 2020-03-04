@@ -90,7 +90,39 @@
 # plot_surface(x,y,z);
 # show()
 
+#FEDL convergence analysis parameters
+L=1 #L-Lipschitz = 1
+beta=0.5 #beta strongly convex
+gamma=0.5 #0.5
+c=0.5
+C=c*L/beta
+c_rho = L/beta
+kappa= 1
 
-x=0.011952875206707304
-y=0.2265161736127464
-println(1/(2*y/0.5 *(((1-x)*0.5)^2 - x*(1+x) - (1+x)^2*y/2 ))* ( 0.2506 + (1/0.5*(log(2) - log(x))*0.1137 + 0.1 * (0.3666 + 1/0.5*(log(2) - log(x))*2.1733))))
+T_cmp, E_cmp, T_com, E_com = 1.02636, 0.504015, 0.27412, 0.271699
+rs_eta= 0.0001
+println("eta_bound:",1/(sqrt(2)*2*c_rho))
+
+Theta=zeros(10)
+Globals=zeros(10)
+Locals=zeros(10)
+Obj=zeros(10)
+test_up = zeros(10)
+test_down = zeros(10)
+x = collect(1.e-5:0.1:0.99)
+
+for i=1:size(x)[1]
+    # Theta[i]=(6*(1+x[i])^2 * c_rho^2 *rs_eta + (4*x[i] + 4*x[i]^2)*c_rho^2 - 4*rs_eta*(x[i]-1)^2)/(c_rho*(2*(x[i]+1)^2*rs_eta^2*c_rho^2-1))
+    Theta[i]=2*rs_eta*(2*(x[i]-1)^2 - (1+x[i])*rs_eta*c_rho^2  - (1 + x[i])*(3*rs_eta+2)*x[i]*c_rho^2 )/(c_rho*(1 - 2*(x[i]+1)^2*rs_eta^2*c_rho^2))
+    test_up[i] = 2*rs_eta*(2*(x[i]-1)^2 - (1+x[i])*rs_eta*c_rho^2  - (1 + x[i])*(3*rs_eta+2)*x[i]*c_rho^2 )
+    test_down[i] = c_rho*(1 - 2*(x[i]+1)^2*rs_eta^2*c_rho^2)
+    Globals[i] = 1/Theta[i]
+    Locals[i] = 1/gamma*(log(C) - log(x[i]))
+    Obj[i] = 1/Theta[i] * ( E_com + 1/gamma*(log(C) - log(x[i]))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(x[i]))*T_cmp))
+end
+println("test_up:", test_up)
+println("test_down:", test_down)
+println("Theta:", Theta)
+println("K_g:", Globals)
+println("K_l:", Locals)
+println("Obj:", Obj)

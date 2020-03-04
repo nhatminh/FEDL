@@ -11,15 +11,15 @@ READ_RESULT = false       # Read results from result files
 DEBUG = 0 #LEVEL 0, 1, 2, 3
 HETEROGENEOUS = 2  # 0: homogeneous, 1: heterogeneous, 2: reused
 # SCALE = false
-# NUMERICAL_RS = true      # Result for Section V: NUMERICAL RESULTS in the paper (50 devs)
-NUMERICAL_RS = false        # Result for Section IV: Closed-Form solution in the paper (5 devs)
+NUMERICAL_RS = false      # Result for Section V: NUMERICAL RESULTS in the paper (50 devs)
+# NUMERICAL_RS = false        # Result for Section IV: Closed-Form solution in the paper (5 devs)
 
 ### 62 kaps
 kaps = [5e-5, 8e-5, 9e-5, 1e-4, 1.3e-4, 1.7e-4, 2e-4, 2.3e-4, 2.7e-4, 3e-4, 3.5e-4, 4e-4, 4.5e-4,
 5e-4, 5.5e-4, 6e-4, 6.5e-4, 7e-4, 7.5e-4, 8e-4, 8.5e-4, 9e-4, 9.5e-4,
 1e-3, 1.5e-3, 2e-3, 2.5e-3, 3e-3, 4e-3, 6e-3, 8e-3, 1e-2, 3e-2, 5e-2, 7e-2,
 1e-1, 0.3, 0.5, 0.7, 0.85, 1.,1.5, 2.,2.5, 3., 3.5, 4., 4.5, 5., 6., 7., 8., 9., 1e1, 3e1, 5e1, 7e1, 1e2, 3e2, 5e2, 7e2, 1e3]
-
+# 36,41,54
 ### 75 kaps
 # kaps = [5e-5, 8e-5, 9e-5, 1e-4, 1.3e-4, 1.7e-4, 2e-4, 2.3e-4, 2.7e-4, 3e-4, 4e-4,
 # 5e-4, 6e-4, 7e-4, 8e-4, 9e-4,
@@ -113,9 +113,9 @@ alpha    = 2e-28
 Numb_kaps = size(kaps)[1]
 
 #FEDL convergence analysis parameters
-L=5 #L-Lipschitz = 1
+L=0.65 #L-Lipschitz = 1
 beta=0.5 #beta strongly convex
-gamma=0.1 #0.5
+gamma=0.5 #0.5
 c=0.5
 C=c*L/beta
 c_rho = L/beta

@@ -377,11 +377,15 @@ function plot_numerical_pareto(Theta1, theta, T_cmp1, E_cmp1, T_com1, E_com1, le
     ylabel("Time Cost",fontsize=label_fontsize1+1)
 
     if(sub==1)
-        xlim(0,1250)
-        ylim(50,700)
+        # xlim(0,1250)
+        xlim(0,450)
+        # ylim(50,700)
+        ylim(0,250)
     else
-        xlim(0,1250)
-        ylim(50,550)
+        # xlim(0,1250)
+        xlim(0,450)
+        # ylim(50,550)
+        # ylim(0,250)
     end
 
     tight_layout(pad=0.5, w_pad=0.5, h_pad=0.5)
@@ -411,7 +415,7 @@ function plot_total_cost(Obj, levels, sub)
     xlabel("\$\\kappa\$",fontsize=label_fontsize1+2)
     ylabel("FEDL's obj",fontsize=label_fontsize1+1)
     xscale("log")
-    ylim(0,1000)
+    ylim(0,400)
     xlim(1e-1,5e0)
     tight_layout(pad=0.5, w_pad=0.5, h_pad=0.5)
     savefig(string(folder,"total1_rs",sub,".pdf"))

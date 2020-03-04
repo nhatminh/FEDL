@@ -239,14 +239,20 @@ end
 
 function Solving_sub_prob3_2( T_cmp, E_cmp, T_com, E_com)
     println("\n===== Solving Sub3: Solver2 =====\n")
+    println([T_cmp, E_cmp, T_com, E_com])
 
     prob = Model(with_optimizer(Ipopt.Optimizer,tol=1e-10, max_iter=1000000, print_level =1))
     # prob = Model(solver=IpoptSolver(tol=1e-10, max_iter=1000000, print_level =1))
 
     @variable(prob, 0 + eps <= Theta <= 1 - eps) #Upper_Theta
+    # @variable(prob, Theta >= 0 + eps) #Upper_Theta
+    # @variable(prob, Theta ) #Upper_Theta
     @variable(prob, 0 + eps <= theta <= 1 - eps) #Small_theta
     # @variable(prob, eta >= 0+ eps) #eta
-    @variable(prob, eta >= ((12+sqrt(146+16*c_rho))/(2*c_rho))) #eta
+    # @variable(prob, eta >= ((12+sqrt(146+16*c_rho))/(2*c_rho))) #eta
+    # @variable(prob, eta >= 1/(2*sqrt(2)*c_rho) + eps) #eta
+    # @variable(prob, (1/(2*sqrt(2)*c_rho) + eps) <= eta <= ((12+sqrt(146+16*c_rho))/(2*c_rho))) #eta
+    @variable(prob, 0+ eps<= eta <= (1/(sqrt(2)*2*c_rho) + eps)) #eta
 
     # T_iter = T_com + cvx.log(cvx.inv_pos(Theta))*T_cmp
     # E_iter = E_com + cvx.log(cvx.inv_pos(Theta))*E_cmp
@@ -256,9 +262,11 @@ function Solving_sub_prob3_2( T_cmp, E_cmp, T_com, E_com)
     # objective = 1/(1-Theta)*(E_iter+ kappa*T_iter)
 
     # @NLconstraint(prob, Theta == 2*eta*L/beta *( ((1-theta)*beta/L)^2 - theta*(1+theta) - (1+theta)^2*eta/2 ) )
-    @NLconstraint(prob, Theta == ((6*(1+theta)^2 * c_rho^2 *eta + (4*theta + 4*theta^2)*c_rho^2 - 4*eta*(theta-1)^2)/(c_rho*(2*(theta+1)^2*eta^2*c_rho^2-1))))
+    # @NLconstraint(prob, Theta == ((6*(1+theta)^2 * c_rho^2 *eta + (4*theta + 4*theta^2)*c_rho^2 - 4*eta*(theta-1)^2)/(c_rho*(2*(theta+1)^2*eta^2*c_rho^2-1))))
+    # @NLconstraint(prob, Theta == (( 4*eta*(theta-1)^2 - 6*(1+theta)^2 * c_rho^2 *eta - (4*theta + 4*theta^2)*c_rho^2 )/(c_rho*(2*(theta+1)^2*eta^2*c_rho^2-1))))
+    @NLconstraint(prob, Theta == ( 2*eta*(2*(theta-1)^2 - (1+theta)*eta*c_rho^2  - (1 + theta)*(3*eta+2)*theta*c_rho^2 )/(c_rho*(1 - 2*(theta+1)^2*eta^2*c_rho^2)) ) )
 
-    @NLobjective(prob, Min, 1/Theta * ( E_com + (1/gamma*(log(C) - log(theta))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(theta))*T_cmp))) )
+    @NLobjective(prob, Min, 1/Theta * ( E_com + 1/gamma*(log(C) - log(theta))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(theta))*T_cmp)) )
     # @NLobjective(prob, Min, 1 )
 
     optimize!(prob)
@@ -267,7 +275,9 @@ function Solving_sub_prob3_2( T_cmp, E_cmp, T_com, E_com)
     rs_Theta = value.(Theta)
     rs_theta = value.(theta)
     rs_eta = value.(eta)
-    rs_Theta1 =  ((6*(1+rs_theta)^2 * c_rho^2 *rs_eta + (4*rs_theta + 4*rs_theta^2)*c_rho^2 - 4*rs_eta*(rs_theta-1)^2)/(c_rho*(2*(rs_theta+1)^2*rs_eta^2*c_rho^2-1)))
+    # rs_Theta1 =  ((6*(1+rs_theta)^2 * c_rho^2 *rs_eta + (4*rs_theta + 4*rs_theta^2)*c_rho^2 - 4*rs_eta*(rs_theta-1)^2)/(c_rho*(2*(rs_theta+1)^2*rs_eta^2*c_rho^2-1)))
+    # rs_Theta1 =  (( 4*rs_eta*(rs_theta-1)^2 - 6*(1+rs_theta)^2 * c_rho^2 *rs_eta - (4*rs_theta + 4*rs_theta^2)*c_rho^2)/(c_rho*(2*(rs_theta+1)^2*rs_eta^2*c_rho^2-1)))
+    rs_Theta1 = 2*rs_eta*(2*(rs_theta-1)^2 - (1+rs_theta)*rs_eta*c_rho^2  - (1 + rs_theta)*(3*rs_eta+2)*rs_theta*c_rho^2 )/(c_rho*(1 - 2*(rs_theta+1)^2*rs_eta^2*c_rho^2))
     # Obj = 1/ rs_Theta * (E_com - log(rs_theta)*E_cmp + kappa * (T_com - log(rs_theta)*T_cmp))
     Obj = 1/rs_Theta * ( E_com + (1/gamma*(log(C) - log(rs_theta))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(rs_theta))*T_cmp)))
 
@@ -324,7 +334,8 @@ function Solving_sub_prob3_search_2( T_cmp, E_cmp, T_com, E_com)
     min_Theta = 0
     for i=1:size(x)[1]
         for j=1:size(y)[1]
-            Theta=((6*(1+x[i])^2 * c_rho^2 *y[j] + (4*x[i] + 4*x[i]^2)*c_rho^2 - 4*y[j]*(x[i]-1)^2)/(c_rho*(2*(x[i]+1)^2*y[j]^2*c_rho^2-1)))
+            # Theta=((6*(1+x[i])^2 * c_rho^2 *y[j] + (4*x[i] + 4*x[i]^2)*c_rho^2 - 4*y[j]*(x[i]-1)^2)/(c_rho*(2*(x[i]+1)^2*y[j]^2*c_rho^2-1)))
+            Theta=2*y[j]*(2*(x[i]-1)^2 - (1+x[i])*y[j]*c_rho^2  - (1 + x[i])*(3*y[j]+2)*x[i]*c_rho^2 )/(c_rho*(1 - 2*(x[i]+1)^2*y[j]^2*c_rho^2))
             obj[i,j] = 1/Theta * ( E_com + (1/gamma*(log(C) - log(x[i]))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(x[i]))*T_cmp)))
             if(Theta<=0  || Theta >=1)
                 obj[i,j] = 0
