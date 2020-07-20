@@ -293,9 +293,9 @@ if(NUMERICAL_RS)
     else
         main_sub1()
         main_sub2()
-        for i =1:20
-            println()
-        end
+        # for i =1:20
+        #     println()
+        # end
     end
 
  # Result for Section IV: Closed-Form solution in the paper (5 devs)
@@ -334,7 +334,7 @@ elseif READ_RESULT
 
 else
     main()
-    for i =1:20
-        println()
-    end
+    # for i =1:20
+    #     println()
+    # end
 end

@@ -334,7 +334,7 @@ function plot_numerical_pareto(Theta1, theta, T_cmp1, E_cmp1, T_com1, E_com1, le
     # end
     idx_levels = [1,3,5]
     clf()
-    cfig = figure(30,figsize=fig_size1)
+    cfig = figure(32,figsize=fig_size1)
     ax = subplot(1,1,1)
     ax.tick_params("both",labelsize=legend_fontsize)
 
@@ -368,9 +368,9 @@ function plot_numerical_pareto(Theta1, theta, T_cmp1, E_cmp1, T_com1, E_com1, le
     plot(E_obj[13,:], T_obj[13,:],linestyle="--",color="k", marker=markers[2], markersize=marker_size)
     plot(E_obj[22,:], T_obj[22,:],linestyle="--",color="k", marker=markers[2], markersize=marker_size)
 
-    annotate(string("\$\\kappa\$=",kaps[11]), xy=[E_obj[11,3]+0.5;T_obj[11,3]], xycoords="data",size=19)
-    annotate(string("\$\\kappa\$=",kaps[13]), xy=[E_obj[13,3]+0.5;T_obj[13,3]], xycoords="data",size=19)
-    annotate(string("\$\\kappa\$=",kaps[22]), xy=[E_obj[22,3]-2.5;T_obj[22,3]+0.5], xycoords="data",size=19)
+    annotate(string("\$\\kappa\$=",kaps[11]), xy=[E_obj[11,3]+0.5;T_obj[11,3]], xycoords="data",size=18)
+    annotate(string("\$\\kappa\$=",kaps[13]), xy=[E_obj[13,3]+0.5;T_obj[13,3]], xycoords="data",size=18)
+    annotate(string("\$\\kappa\$=",kaps[22]), xy=[E_obj[22,3]-2.5;T_obj[22,3]+0.5], xycoords="data",size=18)
 
     legend(loc="best",fontsize=legend_fontsize)
     xlabel("Energy Cost",fontsize=label_fontsize1+1)
@@ -380,7 +380,7 @@ function plot_numerical_pareto(Theta1, theta, T_cmp1, E_cmp1, T_com1, E_com1, le
         # xlim(0,1250)
         xlim(0,450)
         # ylim(50,700)
-        ylim(0,250)
+        # ylim(0,250)
     else
         # xlim(0,1250)
         xlim(0,450)
@@ -416,7 +416,7 @@ function plot_total_cost(Obj, levels, sub)
     ylabel("FEDL's obj",fontsize=label_fontsize1+1)
     xscale("log")
     ylim(0,400)
-    xlim(1e-1,5e0)
+    xlim(1e-1,3e0)
     tight_layout(pad=0.5, w_pad=0.5, h_pad=0.5)
     savefig(string(folder,"total1_rs",sub,".pdf"))
 

@@ -9,10 +9,10 @@ REUSED_TRAFFIC = true
 READ_RESULT = false       # Read results from result files
 
 DEBUG = 0 #LEVEL 0, 1, 2, 3
-HETEROGENEOUS = 2  # 0: homogeneous, 1: heterogeneous, 2: reused
+HETEROGENEOUS = 1  # 0: homogeneous, 1: heterogeneous, 2: reused
 # SCALE = false
-NUMERICAL_RS = false      # Result for Section V: NUMERICAL RESULTS in the paper (50 devs)
-# NUMERICAL_RS = false        # Result for Section IV: Closed-Form solution in the paper (5 devs)
+# NUMERICAL_RS = true      # Result for Section V: NUMERICAL RESULTS in the paper (50 devs)
+NUMERICAL_RS = false        # Result for Section IV: Closed-Form solution in the paper (5 devs)
 
 ### 62 kaps
 kaps = [5e-5, 8e-5, 9e-5, 1e-4, 1.3e-4, 1.7e-4, 2e-4, 2.3e-4, 2.7e-4, 3e-4, 3.5e-4, 4e-4, 4.5e-4,
@@ -113,7 +113,7 @@ alpha    = 2e-28
 Numb_kaps = size(kaps)[1]
 
 #FEDL convergence analysis parameters
-L=0.65 #L-Lipschitz = 1
+L=0.5 #L-Lipschitz = 0.5, 0.65, 0.7, 1, 2.5
 beta=0.5 #beta strongly convex
 gamma=0.5 #0.5
 c=0.5

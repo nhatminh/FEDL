@@ -264,7 +264,10 @@ function Solving_sub_prob3_2( T_cmp, E_cmp, T_com, E_com)
     # @NLconstraint(prob, Theta == 2*eta*L/beta *( ((1-theta)*beta/L)^2 - theta*(1+theta) - (1+theta)^2*eta/2 ) )
     # @NLconstraint(prob, Theta == ((6*(1+theta)^2 * c_rho^2 *eta + (4*theta + 4*theta^2)*c_rho^2 - 4*eta*(theta-1)^2)/(c_rho*(2*(theta+1)^2*eta^2*c_rho^2-1))))
     # @NLconstraint(prob, Theta == (( 4*eta*(theta-1)^2 - 6*(1+theta)^2 * c_rho^2 *eta - (4*theta + 4*theta^2)*c_rho^2 )/(c_rho*(2*(theta+1)^2*eta^2*c_rho^2-1))))
-    @NLconstraint(prob, Theta == ( 2*eta*(2*(theta-1)^2 - (1+theta)*eta*c_rho^2  - (1 + theta)*(3*eta+2)*theta*c_rho^2 )/(c_rho*(1 - 2*(theta+1)^2*eta^2*c_rho^2)) ) )
+    ### Version 1
+    # @NLconstraint(prob, Theta == ( 2*eta*(2*(theta-1)^2 - (1+theta)*eta*c_rho^2  - (1 + theta)*(3*eta+2)*theta*c_rho^2 )/(c_rho*(1 - 2*(theta+1)^2*eta^2*c_rho^2)) ) )
+    ### Version 2
+    @NLconstraint(prob, Theta == ( eta*(2*(theta-1)^2  - (1 + theta)*theta*(3*eta+2)*c_rho^2  - (1+theta)*eta*c_rho^2)/(2*c_rho*(1 + (theta+1)^2*eta^2*c_rho^2)) ) )
 
     @NLobjective(prob, Min, 1/Theta * ( E_com + 1/gamma*(log(C) - log(theta))*E_cmp + kappa * (T_com + 1/gamma*(log(C) - log(theta))*T_cmp)) )
     # @NLobjective(prob, Min, 1 )
