@@ -1,10 +1,15 @@
-# OnDevAI
+# FEDL over Wireless Networks
 
 This repository is a simulation code for the paper
 
 Canh Dinh, Nguyen H. Tran, Minh N. H. Nguyen, Choong Seon Hong, Wei Bao, Albert Y. Zomaya, Vincent Gramoli
 "Federated Learning over Wireless Networks: Convergence Analysis and Resource Allocation".
 https://arxiv.org/abs/1910.13067
+
+# FEDL for multiple services
+Minh N. H. Nguyen, Nguyen H. Tran, Yan Kyaw Tun, Zhu Han, Choong Seon Hong 
+"Toward Multiple Federated Learning Services Resource Sharing in Mobile Edge Networks," 
+https://arxiv.org/abs/2011.12469
 
 We use Julia version 1.0.
 
