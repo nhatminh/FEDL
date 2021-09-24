@@ -6,12 +6,15 @@ Canh Dinh, Nguyen H. Tran, Minh N. H. Nguyen, Choong Seon Hong, Wei Bao, Albert 
 "Federated Learning over Wireless Networks: Convergence Analysis and Resource Allocation".
 https://arxiv.org/abs/1910.13067
 
+Please run the code in `julia` folder
+
 # FEDL for multiple services
 Minh N. H. Nguyen, Nguyen H. Tran, Yan Kyaw Tun, Zhu Han, Choong Seon Hong 
 "Toward Multiple Federated Learning Services Resource Sharing in Mobile Edge Networks," 
 https://arxiv.org/abs/2011.12469
 
 We use Julia version 1.0.
+Please run the code in `multi-services` folder
 
 All of Figures will be generated in `figs` folder.
 
